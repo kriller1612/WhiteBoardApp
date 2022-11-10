@@ -1,11 +1,11 @@
 import './App.css';
 import Board from './components/Board';
 import {initializeApp} from 'firebase/app'
-import {getAuth, signInWithEmailAndPassword, signInWithPopup} from 'firebase/auth'
-import {getFirestore, collection, getDocs} from 'firebase/firestore'
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import {getAuth, onAuthStateChanged, User} from 'firebase/auth'
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom'
 import Login from './components/Login';
 import Signup from './components/Signup';
+import { useEffect, useState } from 'react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEFIdkxCK9yeVb9Z3y3PWLC39sLCaYphg",
@@ -17,29 +17,27 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
 const auth = getAuth(app)
 
-
 function App() {
-  const logInWithEmailAndPassword = async (email: string, password: string) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.error(err)
-    }
-  }
-  return (
-    <div className="App">
+  const [user, setUser] = useState<User | undefined | null>(auth.currentUser)
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user)
+    })
+  }, [])
+
+    return (
+      <div className="App">
       <Router>
-        <Routes>
-          <Route path='/' element={<Board firestore={firestore}/>} />
-          <Route path='/login' element={<Login auth={auth} />} />
-          <Route path='/signup' element={<Signup auth={auth} />} />
-        </Routes>
+          <Routes>
+              <Route path='/' element={user === null ? <Navigate to='/login' /> : <Board />} />
+              <Route path='/login' element={user !== null ? <Navigate to='/' /> : <Login />} />
+              <Route path='/signup' element={user !== null ? <Navigate to='/' /> : <Signup />} />
+          </Routes>
       </Router>
-    </div>
-  );
-}
+      </div>
+    );
+  }
 
 export default App;
