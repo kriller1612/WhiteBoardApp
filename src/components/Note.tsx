@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {DocumentReference, setDoc} from 'firebase/firestore'
+import '../styles/Note.css'
 
 export type NoteType = {
     xPos: number,
@@ -50,8 +51,10 @@ export default function Note(props: NoteType) {
     }
 
     return (
-    <div onDragStart={dragStart} onDragOver={handleDrag} onDragEnd={dragEnd} style={{minWidth: 200, minHeight: 200, backgroundColor: "#FCF4A3",position: 'absolute', top: yPos, left: xPos, border: "1px solid black", display: 'flex', flexDirection: 'column', alignItems: 'baseline', margin: 0}} className="Note" id='note1'>
-        <div draggable style={{cursor: 'pointer',width: '30px', height: '30px', backgroundColor: 'green'}}>
+    <div className='note' onDragStart={dragStart} onDragOver={handleDrag} onDragEnd={dragEnd} style={{top: yPos, left: xPos}} >
+        <div className='noteheader'>
+            <div draggable className='drag'></div>
+            <div className='delete'></div>
         </div>
         <p>{props.content}</p>
     </div>

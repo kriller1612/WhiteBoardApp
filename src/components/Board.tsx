@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Firestore, doc, onSnapshot, query, collection} from 'firebase/firestore'
 import Note, {NoteType} from './Note'
+import Sidebar from './Sidebar';
 
 type BoardProps = {
     firestore: Firestore
@@ -28,6 +29,7 @@ export default function Board(props: BoardProps) {
 
     return (
     <div className="board" style={{width: '200vw', height: '200vh'}}>
+        <Sidebar />
         {notes.map((note, index, arr) => <Note key={"Note"+index} xPos={note.xPos} yPos={note.yPos} owner={note.owner} content={note.content} doc={note.doc} />)}
     </div>
   );
