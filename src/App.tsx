@@ -2,6 +2,7 @@ import './App.css';
 import Board from './components/Board';
 import {initializeApp} from 'firebase/app'
 import {getFirestore, collection, getDocs} from 'firebase/firestore'
+import Sidebar from './components/Sidebar';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEFIdkxCK9yeVb9Z3y3PWLC39sLCaYphg",
@@ -19,6 +20,7 @@ const firestore = getFirestore(app);
 function App() {
   return (
     <div className="App">
+        <Sidebar />
         <Board firestore={firestore} />
     </div>
   );

@@ -12,14 +12,19 @@ export default function Board(props: BoardProps) {
         const q = query(collection(props.firestore, "notes"))
         onSnapshot(q, (snapshot) => {
             let newNotes: NoteType[] = []
+            console.log("Change made")
             snapshot.forEach((doc) => {
                 let data = doc.data()
                 let note: NoteType = {xPos: data?.xPos, yPos: data?.yPos, content: data?.content, owner: data?.owner, doc: doc.ref}
                 newNotes.push(note)
             })
-            setNotes(notes.concat(newNotes))
+            setNotes(newNotes)
         })
     },[])
+
+    useEffect(() => {
+        console.log(notes)
+    }, [notes])
 
     return (
     <div className="board" style={{width: '200vw', height: '200vh'}}>
