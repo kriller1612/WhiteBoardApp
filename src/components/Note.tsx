@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {DocumentReference, setDoc} from 'firebase/firestore'
+import {deleteDoc, DocumentReference, query, setDoc} from 'firebase/firestore'
 import '../styles/Note.css'
+import { getAuth } from 'firebase/auth';
 
 export type NoteType = {
     xPos: number,
@@ -11,15 +12,18 @@ export type NoteType = {
 }
 
 export default function Note(props: NoteType) {
+    const auth = getAuth()
     const [xPos, setXPos] = useState(props.xPos)
     const [yPos, setYPos] = useState(props.xPos)
     const [content, setContent] = useState(props.content)
-    const [owner, setOwner] = useState(props.owner)
+    const [newContent, setNewContent] = useState(props.content)
+    const [edit, setEdit] = useState<boolean>(false)
 
     useEffect(() => {
         setXPos(props.xPos)
         setYPos(props.yPos)
-    }, [props.xPos, props.yPos])
+        setContent(props.content)
+    }, [props.xPos, props.yPos, props.content])
 
     function dragStart(e: React.DragEvent) {
         e.dataTransfer.dropEffect = 'move'
@@ -43,20 +47,53 @@ export default function Note(props: NoteType) {
         saveNote()
     }
 
+    function deleteNote() {
+        if (window.confirm("Are you sure you wish to delete this note?") === true) {
+            deleteDoc(props.doc)
+        }
+    }
+
     function saveNote() {
         let data = {
-            content, owner, xPos, yPos
+            content: content, owner: props.owner, xPos, yPos
         }
         setDoc(props.doc, data)
+    }
+    function editText() {
+        if (auth.currentUser?.email === props.owner) {
+            setEdit(true)
+        }
+    }
+    function cancelEdit() {
+        setEdit(false)
+    }
+
+    function saveEdit() {
+        let data = {
+            content: newContent, owner: props.owner, xPos, yPos
+        }
+        setDoc(props.doc, data)
+        setEdit(false)
     }
 
     return (
     <div className='note' onDragStart={dragStart} onDragOver={handleDrag} onDragEnd={dragEnd} style={{top: yPos, left: xPos}} >
         <div className='noteheader'>
             <div draggable className='drag'></div>
-            <div className='delete'></div>
+            {auth.currentUser?.email === props.owner ?
+            <div className='delete' onClick={deleteNote}></div> : <></>
+            }
         </div>
-        <p>{props.content}</p>
+        {edit === true ? 
+            <div className='editdiv'>
+                <textarea className='textinput' defaultValue={content} onChange={(e) => setNewContent(e.target.value)}/>
+                <div className='editbuttons'>
+                    <button onClick={saveEdit}>Save</button>
+                    <button onClick={cancelEdit}>Cancel</button>
+                </div>
+            </div>
+        : 
+            <p className='textfixed' onClick={editText}>{content}</p>}
     </div>
   );
 }

@@ -1,15 +1,30 @@
 import { getAuth } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { collection, getFirestore, addDoc } from 'firebase/firestore';
+import '../styles/Sidebar.css'
 
 export default function Sidebar() {
     const auth = getAuth();
-    const navigate = useNavigate();
+    const firestore = getFirestore()
+    const notesRef = collection(firestore, 'notes')
+
+    const newNote = () => {
+        addDoc(notesRef, {
+            xPos: 200,
+            yPos: 200,
+            owner: auth.currentUser?.email,
+            content: "Insert text"
+        })
+    }
+
+    const signOut = () => {
+        auth.signOut()
+    }
 
     return (
-        <div className='sidebar' style={{display: 'flex', flexDirection: "column", height: "100vh", width: "50px", position: 'fixed', zIndex: 1000, backgroundColor: "lightgrey", margin: 'auto'}}>
-            <div className='buttonContainer' style={{display: 'flex', flexDirection: 'column', height: 'fit-content', margin: 'auto', gap: '20px'}}>
-                <button>+</button>
-                <button onClick={() => {auth.signOut().then(() => navigate('/login')); }}>Log out</button>
+        <div className='sidebar'>
+            <div className='buttoncontainer'>
+                <button onClick={newNote}>+</button>
+                <button onClick={signOut}>Log out</button>
             </div>
         </div>
   );
