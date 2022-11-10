@@ -23,7 +23,7 @@ export default function Login() {
             <h1>Login</h1>
             <div className='loginform'>
                 <input placeholder='Email' onChange={((e) => setEmail(e.target.value))}></input>
-                <input placeholder='Password' onChange={((e) => setPassword(e.target.value))}></input>
+                <input placeholder='Password' type='password' onChange={((e) => setPassword(e.target.value))}></input>
                 <button className='loginbutton' onClick={() => logInWithEmailAndPassword(email, password)}>Log in</button>
                 <Link to='/signup'>Sign up</Link>
                 <Link to='/forgot'>Forgot password?</Link>

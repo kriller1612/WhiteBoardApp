@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {deleteDoc, DocumentReference, query, setDoc} from 'firebase/firestore'
 import '../styles/Note.css'
+import {DragHandle, Delete, DragIndicator} from '@mui/icons-material';
 import { getAuth } from 'firebase/auth';
 
 export type NoteType = {
@@ -79,9 +80,9 @@ export default function Note(props: NoteType) {
     return (
     <div className='note' onDragStart={dragStart} onDragOver={handleDrag} onDragEnd={dragEnd} style={{top: yPos, left: xPos}} >
         <div className='noteheader'>
-            <div draggable className='drag'></div>
+            <div draggable className='drag'><DragIndicator style={{marginLeft: '-10px', marginTop: '3px'}}/></div>
             {auth.currentUser?.email === props.owner ?
-            <div className='delete' onClick={deleteNote}></div> : <></>
+            <div className='delete' onClick={deleteNote}><Delete style={{marginTop: '3px'}} /></div> : <></>
             }
         </div>
         {edit === true ? 

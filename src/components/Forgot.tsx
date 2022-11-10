@@ -1,4 +1,4 @@
-import {getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth'
+import {getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import { useState } from 'react';
 import '../styles/Forgot.css'
 import { Link } from 'react-router-dom';

@@ -23,7 +23,7 @@ export default function Signup() {
             <h1>Signup</h1>
             <div className='loginform'>
                 <input placeholder='Email' onChange={((e) => setEmail(e.target.value))}></input>
-                <input placeholder='Password' onChange={((e) => setPassword(e.target.value))}></input>
+                <input placeholder='Password' type='password' onChange={((e) => setPassword(e.target.value))}></input>
                 <button className='loginbutton' onClick={() => logInWithEmailAndPassword(email, password)}>Sign up</button>
                 <Link to='/login'>Log in</Link>
             </div>

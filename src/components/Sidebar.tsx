@@ -1,5 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import { collection, getFirestore, addDoc } from 'firebase/firestore';
+import { Add, Logout } from '@mui/icons-material';
 import '../styles/Sidebar.css'
 
 export default function Sidebar() {
@@ -12,7 +13,7 @@ export default function Sidebar() {
             xPos: 200,
             yPos: 200,
             owner: auth.currentUser?.email,
-            content: "Insert text"
+            content: "Click the text of this note to edit it"
         })
     }
 
@@ -23,8 +24,8 @@ export default function Sidebar() {
     return (
         <div className='sidebar'>
             <div className='buttoncontainer'>
-                <button onClick={newNote}>+</button>
-                <button onClick={signOut}>Log out</button>
+                <Add onClick={newNote} style={{cursor: 'pointer'}} />
+                <Logout onClick={signOut} style={{cursor: 'pointer'}} />
             </div>
         </div>
   );
