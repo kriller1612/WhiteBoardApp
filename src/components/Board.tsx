@@ -14,7 +14,7 @@ export default function Board(props: BoardProps) {
             let newNotes: NoteType[] = []
             snapshot.forEach((doc) => {
                 let data = doc.data()
-                let note: NoteType = {xPos: data?.xPos, yPos: data?.yPos, content: data?.content, owner: data?.owner}
+                let note: NoteType = {xPos: data?.xPos, yPos: data?.yPos, content: data?.content, owner: data?.owner, doc: doc.ref}
                 newNotes.push(note)
             })
             setNotes(notes.concat(newNotes))
@@ -23,7 +23,7 @@ export default function Board(props: BoardProps) {
 
     return (
     <div className="board" style={{width: '200vw', height: '200vh'}}>
-        {notes.map((note, index, arr) => <Note key={"Note"+index} xPos={note.xPos} yPos={note.yPos} owner={note.owner} content={note.content} />)}
+        {notes.map((note, index, arr) => <Note key={"Note"+index} xPos={note.xPos} yPos={note.yPos} owner={note.owner} content={note.content} doc={note.doc} />)}
     </div>
   );
 }

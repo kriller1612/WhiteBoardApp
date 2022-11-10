@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import {DocumentReference, setDoc} from 'firebase/firestore'
 
 export type NoteType = {
     xPos: number,
     yPos: number,
     content: string,
     owner: string
+    doc: DocumentReference
 }
 
 export default function Note(props: NoteType) {
     const [xPos, setXPos] = useState(props.xPos)
-    const [yPos, setYPos] = useState(props.xPos)
+    const [yPos, setYPos] = useState(props.yPos)
+    const [content, setContent] = useState(props.content)
+    const [owner, setOwner] = useState(props.owner)
 
     function dragStart(e: React.DragEvent) {
         e.dataTransfer.dropEffect = 'move'
@@ -23,14 +27,20 @@ export default function Note(props: NoteType) {
         if (e.clientX !== 0 ) {
             setXPos(e.pageX-15)
         }
-
         if (e.clientY !== 0 ) {
             setYPos(e.pageY-15)
         }
     }
 
     function dragEnd(e: React.DragEvent) {
+        saveNote()
+    }
 
+    function saveNote() {
+        let data = {
+            content, owner, xPos, yPos
+        }
+        setDoc(props.doc, data)
     }
 
     return (
