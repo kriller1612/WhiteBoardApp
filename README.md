@@ -33,6 +33,8 @@ It's always fun to work on small projects like this.
 
 # Build instructions (default react instructions)
 
+Pull the project down, navigate into the project directory and run `npm install` to install all dependencies before running any scripts
+
 ## Available Scripts
 
 In the project directory, you can run:
