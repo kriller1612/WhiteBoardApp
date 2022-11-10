@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useEffect, useState } from 'react';
+import Forgot from './components/Forgot';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEFIdkxCK9yeVb9Z3y3PWLC39sLCaYphg",
@@ -34,6 +35,7 @@ function App() {
               <Route path='/' element={user === null ? <Navigate to='/login' /> : <Board />} />
               <Route path='/login' element={user !== null ? <Navigate to='/' /> : <Login />} />
               <Route path='/signup' element={user !== null ? <Navigate to='/' /> : <Signup />} />
+              <Route path='/forgot' element={user !== null ? <Navigate to='/' /> : <Forgot />} />
           </Routes>
       </Router>
       </div>

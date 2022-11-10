@@ -26,6 +26,7 @@ export default function Login() {
                 <input placeholder='Password' onChange={((e) => setPassword(e.target.value))}></input>
                 <button className='loginbutton' onClick={() => logInWithEmailAndPassword(email, password)}>Log in</button>
                 <Link to='/signup'>Sign up</Link>
+                <Link to='/forgot'>Forgot password?</Link>
             </div>
         </div>
     )
