@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Board from './components/Board';
 import {initializeApp} from 'firebase/app'
@@ -19,7 +17,6 @@ const firestore = getFirestore(app);
 
 
 function App() {
-  console.log(collection(firestore, "notes"))
   return (
     <div className="App">
         <Board firestore={firestore} />
