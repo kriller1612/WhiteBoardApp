@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {Firestore, doc, onSnapshot, query, collection} from 'firebase/firestore'
-import Note from './Note'
+import Note, {NoteType} from './Note'
 
-type NoteType = {
-    xPos: number,
-    yPos: number,
-    content: string,
-    owner: string
-}
+
 
 type BoardProps = {
     firestore: Firestore

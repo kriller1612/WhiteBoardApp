@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-type NoteProps = {
+export type NoteType = {
     xPos: number,
     yPos: number,
     content: string,
     owner: string
 }
 
-export default function Note(props: NoteProps) {
+export default function Note(props: NoteType) {
     const [xPos, setXPos] = useState(props.xPos)
     const [yPos, setYPos] = useState(props.xPos)
 
@@ -30,7 +30,7 @@ export default function Note(props: NoteProps) {
     }
 
     function dragEnd(e: React.DragEvent) {
-        
+
     }
 
     return (
